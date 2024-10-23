@@ -1,0 +1,167 @@
+:root {
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 60px;
+    --transition-duration: 0.3s;
+    --primary-color: #343a40;
+    --hover-color: #738595;
+    --main-bg-color: #f8f9fa;
+    --toggle-btn-size: 40px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    overflow: hidden;
+}
+
+aside {
+    width: var(--sidebar-width);
+    background: var(--primary-color);
+    color: white;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    transition: width var(--transition-duration);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+aside.collapsed {
+    width: var(--sidebar-collapsed-width);
+}
+
+aside h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    transition: opacity var(--transition-duration);
+    width: 100%;
+}
+
+aside.collapsed h2 {
+    opacity: 0;
+    pointer-events: none;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+aside ul li {
+    margin-bottom: 10px;
+}
+
+aside ul li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background var(--transition-duration), padding-left var(--transition-duration);
+}
+
+aside ul li a:hover {
+    background: var(--hover-color);
+    text-decoration: none;
+}
+
+aside ul li a .icon {
+    min-width: 30px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+aside ul li a .text {
+    margin-left: 10px;
+    white-space: nowrap;
+    transition: opacity var(--transition-duration), visibility var(--transition-duration);
+}
+
+aside.collapsed ul li a .text {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.toggle-btn {
+    position: absolute;
+    top: 20px;
+    background: var(--hover-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: var(--toggle-btn-size);
+    height: var(--toggle-btn-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform var(--transition-duration), background var(--transition-duration);
+    z-index: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-btn:hover {
+    background: #495057;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: var(--main-bg-color);
+    transition: padding var(--transition-duration);
+}
+
+aside.collapsed + main {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    aside {
+        width: 100%;
+        height: auto;
+        transition: height var(--transition-duration);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+    aside.collapsed {
+        height: auto;
+        width: 100%;
+    }
+    aside h2 {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+    aside ul {
+        display: flex;
+        flex-direction: row;
+        width: auto;
+    }
+    aside ul li {
+        margin: 0 5px;
+    }
+    aside ul li a .text {
+        display: none;
+    }
+    aside.collapsed ul li a .text {
+        display: none;
+    }
+    main {
+        padding: 15px;
+    }
+}

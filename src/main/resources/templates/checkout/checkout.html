@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Cliente Existente</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Finalizar Compra - Cliente Existente</h2>
+    <form action="/checkout/checkoutDni" method="post">
+        <div class="form-group">
+            <label for="dni">DNI del Cliente:</label>
+            <input type="text" id="dni" name="dni" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="empleado">Seleccionar Empleado:</label>
+            <select id="empleado" name="empleadoId" class="form-control" required>
+                <option value="" disabled selected>Seleccione un empleado</option>
+                <th:block th:each="empleado : ${empleados}">
+                    <option th:value="${empleado.getEmpleadoId()}" th:text="${empleado.getNombre()} + ' ' + ${empleado.getApellido()}"></option>
+                </th:block>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="metodoPago">Seleccionar Método de Pago:</label>
+            <select id="metodoPago" name="metodoPagoId" class="form-control" required>
+                <option value="" disabled selected>Seleccione un método de pago</option>
+                <th:block th:each="metodo : ${metodosPago}">
+                    <option th:value="${metodo.getMetodoPagoId()}" th:text="${metodo.getNombre()}"></option>
+                </th:block>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" id="btnGenerarPDF">Finalizar Compra</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('btnGenerarPDF').addEventListener('click', function () {
+        window.location.href = '/generarPDF?ventaId=123';
+        setTimeout(function() {
+            window.location.href = '/venta/listar';
+        }, 1000);
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/aside-dashboard.css}">
+</head>
+<body>
+<aside id="sidebar" th:replace="components/dashboard :: aside_dashboard"></aside>
+<main class="container mt-4">
+    <h1>Carrito de Compras</h1>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <div th:if="${cart.items.isEmpty()}">
+        <p>Tu carrito está vacío.</p>
+        <a href="/productos/catalogo" class="btn btn-primary">Ir al Catálogo</a>
+    </div>
+
+    <div th:unless="${cart.items.isEmpty()}">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cart.items}">
+                <td th:text="${item.producto.nombre}">Nombre del Producto</td>
+                <td th:text="${item.producto.precio}">Precio</td>
+                <td th:text="${item.cantidad}">Cantidad</td>
+                <td th:text="${item.subTotal}">Subtotal</td>
+                <td>
+                    <a th:href="@{/carrito/remove/{id}(id=${item.producto.productoId})}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p><strong>Total: </strong><span th:text="${cart.total}">Total</span></p>
+        <a href="/checkout" class="btn btn-success">Finalizar Compra Cliente Existente</a>
+        <a href="/checkout/clienteNuevo" class="btn btn-success">Finalizar Compra Cliente Nuevo</a>
+        <a href="/carrito/clear" class="btn btn-warning">Vaciar Carrito</a>
+        <a href="/productos/catalogo" class="btn btn-secondary">Continuar Comprando</a>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#toggleSidebar').on('click', function () {
+            $('#sidebar').toggleClass('collapsed');
+            if ($('#sidebar').hasClass('collapsed')) {
+                $(this).html('<i class="fas fa-chevron-right"></i>');
+            } else {
+                $(this).html('<i class="fas fa-chevron-left"></i>');
+            }
+        });
+
+        $('.productos').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('.ventas').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'right',
+            trigger: 'hover'
+        });
+    });
+</script>
+</body>
+</html>

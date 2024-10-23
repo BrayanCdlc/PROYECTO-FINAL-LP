@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Producto</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/aside-dashboard.css}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            margin-top: 20px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+        .card-body {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+<aside id="sidebar" th:replace="components/dashboard :: aside_dashboard"></aside>
+<main class="container">
+    <h2 class="mb-4">Registrar Nuevo Producto</h2>
+
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0">Detalles del Producto</h4>
+        </div>
+        <div class="card-body">
+            <form action="#" th:action="@{/productos}" method="post"  enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nombre">Nombre del Producto</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="number" class="form-control" id="precio" name="precio" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" class="form-control" id="stock" name="stock" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select class="form-control" id="categoria" name="categoriaId" required>
+                        <option value="">Seleccione una categoría</option>
+                        <option th:each="categoria : ${categorias}"
+                                th:value="${categoria.categoriaId}"
+                                th:text="${categoria.nombre}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="file">Imagen</label>
+                    <input type="file" id="file" name="file" class="form-control" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary">Crear Producto</button>
+                <a href="/productos" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#toggleSidebar').on('click', function () {
+            $('#sidebar').toggleClass('collapsed');
+            if ($('#sidebar').hasClass('collapsed')) {
+                $(this).html('<i class="fas fa-chevron-right"></i>');
+            } else {
+                $(this).html('<i class="fas fa-chevron-left"></i>');
+            }
+        });
+
+        $('.productos').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('.ventas').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'right',
+            trigger: 'hover'
+        });
+    });
+</script>
+
+</body>
+</html>

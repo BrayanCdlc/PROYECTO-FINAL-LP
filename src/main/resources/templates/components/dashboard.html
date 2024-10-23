@@ -1,0 +1,55 @@
+<aside id="sidebar" th:fragment="aside_dashboard">
+    <button class="toggle-btn" id="toggleSidebar">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <br><br><br>
+    <h2>Ventas Presenciales</h2>
+    <ul>
+        <li>
+            <a href="javascript:void(0);" class="productos" data-toggle="tooltip" title="Productos">
+                <span class="icon"><i class="fas fa-boxes"></i></span>
+                <span class="text">Inventario</span>
+            </a>
+            <ul class="submenu" style="display: none;">
+                <li>
+                    <a th:href="@{/productos/nuevo}" data-toggle="tooltip" title="Agregar Producto">
+                        <span class="icon"><i class="fas fa-plus"></i></span>
+                        <span class="text">Agregar Producto</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/productos}" data-toggle="tooltip" title="Listar Productos">
+                        <span class="icon"><i class="fas fa-list"></i></span>
+                        <span class="text">Listar Productos</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a th:href="@{/productos/catalogo}" data-toggle="tooltip" title="Catálogo">
+                <span class="icon"><i class="fas fa-book"></i></span>
+                <span class="text">Catálogo</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/carrito}" data-toggle="tooltip" title="Ver todo el Carrito">
+                <span class="icon"><i class="fas fa-eye"></i></span>
+                <span class="text">Ver Carrito</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="ventas" data-toggle="tooltip" title="Ventas">
+                <span class="icon"><i class="fas fa-receipt"></i></span>
+                <span class="text">Reportes</span>
+            </a>
+            <ul class="submenu" style="display: none;">
+                <li>
+                    <a th:href="@{/venta/listar}" data-toggle="tooltip" title="Listar Ventas">
+                        <span class="icon"><i class="fas fa-list"></i></span>
+                        <span class="text">Listar Ventas</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</aside>

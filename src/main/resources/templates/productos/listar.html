@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Productos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/aside-dashboard.css}">
+</head>
+<body>
+
+<aside id="sidebar" th:replace="components/dashboard :: aside_dashboard"></aside>
+<main>
+<div class="container-fluid">
+    <h2 class="mb-4">Listado de Productos</h2>
+
+    <a href="/productos/nuevo" class="btn btn-success mb-3">Nuevo Producto</a>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="producto : ${productos}">
+                <td th:text="${producto.productoId}"></td>
+                <td th:text="${producto.nombre}"></td>
+                <td th:text="${producto.precio}"></td>
+                <td th:text="${producto.stock}"></td>
+                <td>
+                    <a th:href="@{/productos/editar/{id}(id=${producto.productoId})}" class="btn btn-primary btn-sm">Editar</a>
+                    <a th:href="@{/productos/eliminar/{id}(id=${producto.productoId})}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este producto?');">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#toggleSidebar').on('click', function () {
+            $('#sidebar').toggleClass('collapsed');
+            if ($('#sidebar').hasClass('collapsed')) {
+                $(this).html('<i class="fas fa-chevron-right"></i>');
+            } else {
+                $(this).html('<i class="fas fa-chevron-left"></i>');
+            }
+        });
+
+        $('.productos').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('.ventas').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'right',
+            trigger: 'hover'
+        });
+    });
+</script>
+
+</body>
+</html>

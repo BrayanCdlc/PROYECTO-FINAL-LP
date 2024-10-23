@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Ventas</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/aside-dashboard.css}">
+</head>
+<body>
+
+<aside id="sidebar" th:replace="components/dashboard :: aside_dashboard"></aside>
+<main>
+    <div class="container-fluid">
+        <h2 class="mb-4">Listado de Ventas</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="venta : ${ventas}">
+                    <td th:text="${venta.getVentaId()}"></td>
+                    <td th:text="${venta.getCliente().getNombre()}"></td>
+                    <td th:text="${#dates.format(venta.getFecha(), 'dd/MM/yyyy')}"></td>
+                    <td th:text="${venta.getMontoTotal()}"></td>
+                    <td>
+                        <a th:href="@{/venta/generarPDF(ventaId=${venta.ventaId})}" class="btn btn-primary btn-sm">Generar Boleta</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#toggleSidebar').on('click', function () {
+            $('#sidebar').toggleClass('collapsed');
+            if ($('#sidebar').hasClass('collapsed')) {
+                $(this).html('<i class="fas fa-chevron-right"></i>');
+            } else {
+                $(this).html('<i class="fas fa-chevron-left"></i>');
+            }
+        });
+
+        $('.productos').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('.ventas').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'right',
+            trigger: 'hover'
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/aside-dashboard.css}">
+
+    <style>
+        .card-img-top {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<aside id="sidebar" th:replace="components/dashboard :: aside_dashboard"></aside>
+
+<main class="container mt-4">
+    <h2 class="text-center">Catálogo de Productos</h2>
+    <div class="row">
+        <div th:each="producto : ${productos}" class="col-md-3">
+            <div class="card mb-4">
+                <form th:action="@{/carrito/agregarCarrito/{id}(id=${producto.productoId})}" method="post">
+                    <input type="hidden" name="productoId" th:value="${producto.productoId}" />
+                <img th:src="@{'/uploads/' + ${producto.imagen}}" class="card-img-top" alt="Nombre del Producto">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${producto.nombre}">Nombre del Producto</h5>
+                    <p class="card-text" th:text="'Precio: $' + ${producto.precio}">Precio: $XX.XX</p>
+
+                    <button type="submit" class="btn btn-secondary">Agregar al carrito</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#toggleSidebar').on('click', function () {
+            $('#sidebar').toggleClass('collapsed');
+            if ($('#sidebar').hasClass('collapsed')) {
+                $(this).html('<i class="fas fa-chevron-right"></i>');
+            } else {
+                $(this).html('<i class="fas fa-chevron-left"></i>');
+            }
+        });
+
+        $('.productos').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('.ventas').on('click', function (e) {
+            e.preventDefault();
+            $(this).siblings('.submenu').slideToggle();
+        });
+
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'right',
+            trigger: 'hover'
+        });
+    });
+</script>
+</body>
+</html>
